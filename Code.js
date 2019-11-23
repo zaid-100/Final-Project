@@ -4,8 +4,9 @@ var compPromise = d3.csv("Comp.csv");
 Promise.all([AllPromise,hoursPromise,compPromise]).then(
 function(countries)
 {
-    
-console.log("Working", countries)      
+    console.log("Working", countries)      
+    join(countries);
+
 }
 )
 var join = function(countries)
@@ -13,19 +14,19 @@ var join = function(countries)
 var hash = {}
 countries[0].forEach(function(GDP)
         {
-            hash
-        }
-                    )
-
-
-
-
-
-
-
-
+            hash[GDP.TIME+","+GDP.LOCATION]=GDP;
+        //console.log( "workss", countries[0])
+        })
+    countries[1].forEach(function(hours)
+        {
+        hash[hours.TIME+","+hours.LOCATION] = hours;
+        
+        })
+console.log(countries[0])    
+    
+    
 }
-
+        
 //Do the hash joins
 //build the layout
 
