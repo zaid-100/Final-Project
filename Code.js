@@ -17,9 +17,16 @@ countries[0].forEach(function(GDP)
             hash[GDP.TIME+","+GDP.LOCATION]=GDP;
         //console.log( "workss", countries[0])
         })
+    
     countries[1].forEach(function(hours)
         {
-        hash[hours.TIME+","+hours.LOCATION] = hours;
+        var Hval = hash[hours.TIME+","+hours.LOCATION]
+        console.log([hours.TIME+","+hours.LOCATION],Hval)
+        if(Hval)
+        {
+        Hval.data = hours
+            //console.log(Hval)
+        }
         
         })
 console.log(countries[0])    
