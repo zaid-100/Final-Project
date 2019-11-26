@@ -7,7 +7,8 @@ function(countries)
 { 
     console.log("original data", countries)      
     join(countries); //join done
-
+    setup(countries);
+    drawvis(countries);
 })
 
 
@@ -45,7 +46,7 @@ countries[1].forEach(function(hours)
 console.log("joined data (countries[1])", countries[1])    
 }
         
-var screen = {width: 400, height:500}
+var screen = {width: 1250, height:900}
 var margins = {top:10, right:50, bottom:50,left:50}
 
 var setup = function(countries)
@@ -59,14 +60,24 @@ d3.select("svg")
             
     var width = screen.width - margins.left - margins.right;
     var height = screen.height - margins.top - margins.bottom;
-            
+    var xScale = d3.scaleLinear()
+    .domain([-5,150])
+    .range([0,width])
                      
-                     
-                     
-                     
-                     
-                     
-         }
+        }
+var drawvis = function(countries)
+{
+    var vis = d3.select("#graph")
+    .selectAll("g")
+    .data(countries[1])
+    .enter()
+    .append("g")
+    .append("rect").attr("width", function(comp)
+    {
+        console.log("ready",comp)
+    })
+    //console.log("read")
+}
 //build the layout
 
 
