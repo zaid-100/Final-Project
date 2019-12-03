@@ -7,9 +7,20 @@ function(countries)
 { 
     console.log("original data", countries)      
     join(countries); //join done
-    setup(countries);
-    drawvis(countries);
-})
+    //setup(countries);
+    //filtred(countries[1])
+    var goodcountries = []
+    countries[1].forEach(function(d)
+                        {
+                          if (filtred(d))
+                              {
+                                  goodcountries.push(d)
+                              }
+        
+                        })
+    setup(goodcountries);
+    console.log("filtred", goodcountries)
+    })
 
 
 var join = function(countries)
@@ -49,7 +60,7 @@ console.log("joined data (countries[1])", countries[1])
 var screen = {width: 1250, height:900}
 var margins = {top:10, right:50, bottom:50,left:50}
 
-var setup = function(countries)
+var setup = function(goodcountries)
         {                     
 d3.select("svg")
     .attr("width",screen.width)
@@ -60,36 +71,67 @@ d3.select("svg")
             
     var width = screen.width - margins.left - margins.right;
     var height = screen.height - margins.top - margins.bottom;
-    var xScale = d3.scaleLinear()
-    .domain([-5,150])
-    .range([0,width])
-                     
+    var HScale = d3.scaleLinear()
+    .domain([0,2500])
+    .range([0,width-100]);
+    var CoScale = d3.scaleLinear()
+    .domain([0,100])
+    .range(0,width)
+    drawvis(goodcountries, HScale, CoScale)
+            //console.log(goodcountries);
         }
-var drawvis = function(countries)
+var drawvis = function(goodcountries, HScale, CoScale)
 {
     var vis = d3.select("#graph")
-    .selectAll("g")
-    .data(countries[1])
+    .selectAll(".plot")
+    .data(goodcountries)
     .enter()
-    .append("g")
+    .append("g").attr("class", "plot")
     .append("rect").attr("width", function(hours)
     {
-        return hours.Value
+        return HScale(hours.Value)
     })
     .attr("height", 50)
     .attr("margin", 10)
-    .append("rect").classed("comp").attr("width", function(comp)
+    .attr("y", function(d, index)
     {
-        console.log(comp.Cdata)
-    }
-                                        )
+        return index*100
+    })
+    .attr("fill", "brown")
     
-} 
+    d3.selectAll(".plot").append("text").text(function(names)
+    {
+        return names.LOCATION
+    })
+        .attr("x", 760)
+    .attr("y", function(d, index)
+        {
+         return index*100+30
+        })
+    
+   d3.select("#graph").selectAll(".plot").append("rect").attr("class", "comp").attr("width", 10).attr("height", 80)
+    .attr("y", function(d,index)
+         {
+          return index*100-15
+        }
+         ).attr("x",function(comp, CoScale)
+         {
+                 return CoScale(comp.Cdata.Value)
+        //console.log("read", comp)
+        })//scale not working here
+}
+//filtre function here
+var filtred = function(country)
+        {
+           if (typeof country.Cdata !='undefined'&& typeof country.Gdata !='undefined')
+            {
+                return true
+            }
+            else {return false}
+        console.log("read")
+        };
+
 //build the layout
 //how to plot only for 1 year and only for 1 measure type (US dollars)
-//Why is there an error? no error for comp.Cdata but error for comp.Cdata.Value
-//each G on top of each other. i want Gs with margins
-//how do i make my rectangles follow a scale
 
-
-
+//IMMEDIATE QUESTIONS: CoScale not working
