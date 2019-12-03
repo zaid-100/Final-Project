@@ -72,17 +72,24 @@ var drawvis = function(countries)
     .data(countries[1])
     .enter()
     .append("g")
-    .append("rect").attr("width", function(comp)
+    .append("rect").attr("width", function(hours)
+    {
+        return hours.Value
+    })
+    .attr("height", 50)
+    .attr("margin", 10)
+    .append("rect").classed("comp").attr("width", function(comp)
     {
         console.log(comp.Cdata)
-    })
+    }
+                                        )
     
 } 
 //build the layout
 //how to plot only for 1 year and only for 1 measure type (US dollars)
 //Why is there an error? no error for comp.Cdata but error for comp.Cdata.Value
-
-
+//each G on top of each other. i want Gs with margins
+//how do i make my rectangles follow a scale
 
 
 
