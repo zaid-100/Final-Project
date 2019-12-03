@@ -74,11 +74,13 @@ var drawvis = function(countries)
     .append("g")
     .append("rect").attr("width", function(comp)
     {
-        console.log("ready",comp)
+        console.log(comp.Cdata)
     })
-    //console.log("read")
-}
+    
+} 
 //build the layout
+//how to plot only for 1 year and only for 1 measure type (US dollars)
+//Why is there an error? no error for comp.Cdata but error for comp.Cdata.Value
 
 
 
