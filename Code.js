@@ -35,13 +35,14 @@ var ninety = function(countries)
 {
     d3.select(".NI").data(countries).on("click", function(d)
                        {
+                        d3.selectAll(".plot").remove()
                         setup(countries)
                         }
                        )}
 var hundred = function(countries)
 {
     d3.select(".TWO").data(countries).on("click", function(d)
-                       {
+                       {d3.selectAll(".plot").remove()
                         setup(countries)
                         }
                        )
@@ -49,7 +50,7 @@ var hundred = function(countries)
 var hunten = function(countries)
 {
     d3.select(".TEN").data(countries).on("click", function(d)
-                       {
+                       {d3.selectAll(".plot").remove()
                         setup(countries)
                         }
                        )
@@ -57,7 +58,7 @@ var hunten = function(countries)
 var huneight = function(countries)
 {
     d3.select(".EIGHT").data(countries).on("click", function(d)
-                       {
+                       {d3.selectAll(".plot").remove()
                         setup(countries)
                         }
                        )
@@ -158,13 +159,20 @@ d3.select("svg")
     {
         return index*45 - 4
     })
-    .attr("fill", "teal")
+    .attr("fill", "teal").attr("rx", 15)
+    d3.selectAll(".plot").append("rect").attr("width", 1300).attr("height", 2)
+    .attr("y", function(d, index)
+         {
+        return index*45 +4
+    }
+         )
+    
     
     d3.selectAll(".plot").append("text").text(function(names)
     {
         return names.LOCATION
     })
-        .attr("x", 1150)
+        .attr("x", 1220)
     .attr("y", function(d, index)
         {
          return index*45+5
@@ -186,6 +194,7 @@ d3.select("svg")
        .attr("class", "comp")
        .attr("width", 10)
        .attr("height", 25)
+        .attr("fill-opacity", 0.7)
     .attr("y", function(d,index)
          {
           return index*45-8
