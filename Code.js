@@ -77,6 +77,9 @@ d3.select("svg")
     var CoScale = d3.scaleLinear()
     .domain([0,100])
     .range(0,width);
+            var ProdScale = d3.scaleLinear()
+    .domain([0,100])
+    .range(0,width);
             console.log("read", goodcountries)
     drawvis(goodcountries, HScale, CoScale)
                 
@@ -115,7 +118,7 @@ d3.select("svg")
     {
         return index*100
     })
-    .attr("fill", "brown")
+    .attr("fill", "teal")
     
     d3.selectAll(".plot").append("text").text(function(names)
     {
@@ -145,7 +148,7 @@ d3.select("svg")
          {
           return index*100-15
         }
-         ).attr("x",function(comp, CoScale)
+         ).attr("fill", "skyblue").attr("x",function(comp, CoScale)
          {
                  return comp.Cdata.Value//CoScale(comp.Cdata.Value)
         //console.log("read", comp)
@@ -166,7 +169,7 @@ d3.select("svg")
         .attr("class","prod").attr("height", 20).attr("y",function(d,index)
         {
           return index*100+15
-        }).attr("width", function(d,index)
+        }).attr("fill", "limegreen").attr("width", function(d,index)
                {
                 return d.Gdata.Value
                 }
@@ -186,8 +189,9 @@ d3.select("svg")
 //build the layout
 
 
-//IMMEDIATE QUESTIONS: CoScale not working
-/*for penguins day was just index, here that is not the case. Also, how do we chose to plot graphs for only 1 measure type (USD).                hover needed to show value of what's hovered over    
+//IMMEDIATE QUESTIONS: CoScale and ProdScale not working
+/*for penguins day was just index, here that is not the case. Also, how do we chose to plot graphs for only 1 measure type (USD).
+figure out animation once year change is done, make each graph smalle in size so more fit.
 
 */
 
