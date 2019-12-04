@@ -76,8 +76,11 @@ d3.select("svg")
     .range([0,width-100]);
     var CoScale = d3.scaleLinear()
     .domain([0,100])
-    .range(0,width)
+    .range(0,width);
+            console.log("read", goodcountries)
     drawvis(goodcountries, HScale, CoScale)
+                
+            
             //console.log(goodcountries);
         }
 var drawvis = function(goodcountries, HScale, CoScale)
@@ -141,7 +144,12 @@ var filtred = function(country)
         };
 
 //build the layout
-//how to plot only for 1 year and only for 1 measure type (US dollars)
+
 
 //IMMEDIATE QUESTIONS: CoScale not working
-// for penguins day was just index, here that is not the case. Also, how do we chose to plot graphs for only 1 measure type (USD).                //hover needed to show value of what's hovered over    
+/*for penguins day was just index, here that is not the case. Also, how do we chose to plot graphs for only 1 measure type (USD).                hover needed to show value of what's hovered over    
+
+*/
+
+
+
