@@ -116,9 +116,18 @@ var drawvis = function(goodcountries, HScale, CoScale)
         }
          ).attr("x",function(comp, CoScale)
          {
-                 return CoScale(comp.Cdata.Value)
+                 return comp.Cdata.Value//CoScale(comp.Cdata.Value)
         //console.log("read", comp)
         })//scale not working here
+    d3.select("#graph").selectAll(".plot").append("rect")
+        .attr("class","prod").attr("height", 20).attr("y",function(d,index)
+        {
+          return index*100+15
+        }).attr("width", function(d,index)
+               {
+                return d.Gdata.Value
+                }
+               )
 }
 //filtre function here
 var filtred = function(country)
@@ -135,3 +144,4 @@ var filtred = function(country)
 //how to plot only for 1 year and only for 1 measure type (US dollars)
 
 //IMMEDIATE QUESTIONS: CoScale not working
+// for penguins day was just index, here that is not the case. Also, how do we chose to plot graphs for only 1 measure type (USD).                //hover needed to show value of what's hovered over    
