@@ -15,14 +15,53 @@ function(countries)
                           if (filtred(d))
                               {
                                   goodcountries.push(d)
-                              }
-        
-                        })
-    setup(goodcountries);
+                              }})
+    var TC1990 = goodcountries.filter(Tfilter)
+    var TC2000 = goodcountries.filter(TTfilter)
+    var TC2010 = goodcountries.filter(TTTfilter)
+    var TC2018 = goodcountries.filter(TTTTfilter)
+    /*console.log("1990", TC1990)
+    console.log("2000", TC2000)
+    console.log("2010", TC2010)
+    console.log("2018", TC2018)*/
+    setup(TC1990);
+    ninety(TC1990);
+    hundred(TC2000);
+    hunten(TC2010);
+    huneight(TC2018);
     console.log("filtred", goodcountries)
     })
-
-
+var ninety = function(countries)
+{
+    d3.select(".NI").data(countries).on("click", function(d)
+                       {
+                        setup(countries)
+                        }
+                       )}
+var hundred = function(countries)
+{
+    d3.select(".TWO").data(countries).on("click", function(d)
+                       {
+                        setup(countries)
+                        }
+                       )
+}
+var hunten = function(countries)
+{
+    d3.select(".TEN").data(countries).on("click", function(d)
+                       {
+                        setup(countries)
+                        }
+                       )
+}
+var huneight = function(countries)
+{
+    d3.select(".EIGHT").data(countries).on("click", function(d)
+                       {
+                        setup(countries)
+                        }
+                       )
+}
 var join = function(countries)
 //hash join done here
 {
@@ -57,7 +96,7 @@ countries[1].forEach(function(hours)
 console.log("joined data (countries[1])", countries[1])    
 }
         
-var screen = {width: 1250, height:900}
+var screen = {width: 1330, height:900}
 var margins = {top:10, right:50, bottom:50,left:50}
 
 var setup = function(goodcountries)
@@ -72,22 +111,23 @@ d3.select("svg")
     var width = screen.width - margins.left - margins.right;
     var height = screen.height - margins.top - margins.bottom;
     var HScale = d3.scaleLinear()
-    .domain([0,2500])
-    .range([0,width-100]);
+    .domain([0,1960])
+    .range([0,width]);
     var CoScale = d3.scaleLinear()
-    .domain([0,100])
-    .range(0,width);
+    .domain([0,136])
+    .range([0,width])
+    ;
             var ProdScale = d3.scaleLinear()
-    .domain([0,100])
-    .range(0,width);
+    .domain([0,150])
+    .range([0,width]);
             console.log("read", goodcountries)
-    drawvis(goodcountries, HScale, CoScale)
+    drawvis(goodcountries, HScale, CoScale, ProdScale)
                 
             
             //console.log(goodcountries);
         }
-    var drawvis = function(goodcountries, HScale, CoScale)
-    {
+    var drawvis = function(goodcountries, HScale, CoScale, ProdScale)
+{
     var vis = d3.select("#graph")
     .selectAll(".plot")
     .data(goodcountries)
@@ -112,11 +152,11 @@ d3.select("svg")
     {
         return HScale(hours.Value)
     })
-    .attr("height", 50)
+    .attr("height", 18)
     .attr("margin", 10)
     .attr("y", function(d, index)
     {
-        return index*100
+        return index*45 - 4
     })
     .attr("fill", "teal")
     
@@ -124,10 +164,10 @@ d3.select("svg")
     {
         return names.LOCATION
     })
-        .attr("x", 760)
+        .attr("x", 1150)
     .attr("y", function(d, index)
         {
-         return index*100+30
+         return index*45+5
         })
     
    d3.select("#graph").selectAll(".plot").append("rect")
@@ -143,16 +183,17 @@ d3.select("svg")
             d3.select("#tooltip")
                 .classed("hidden", true);
         })
-       .attr("class", "comp").attr("width", 10).attr("height", 80)
+       .attr("class", "comp")
+       .attr("width", 10)
+       .attr("height", 25)
     .attr("y", function(d,index)
          {
-          return index*100-15
+          return index*45-8
         }
-         ).attr("fill", "skyblue").attr("x",function(comp, CoScale)
+         ).attr("fill", "skyblue").attr("x",function(comp, index)
          {
-                 return comp.Cdata.Value//CoScale(comp.Cdata.Value)
-        //console.log("read", comp)
-        })//scale not working here
+                 return CoScale(comp.Cdata.Value)
+        })
     d3.select("#graph").selectAll(".plot").append("rect")
         .on("mouseover",function(d)
             {   
@@ -166,32 +207,59 @@ d3.select("svg")
             d3.select("#tooltip")
                 .classed("hidden", true);
         })
-        .attr("class","prod").attr("height", 20).attr("y",function(d,index)
+        .attr("class","prod").attr("height", 5).attr("y",function(d,index)
         {
-          return index*100+15
+          return index*45+2.5
         }).attr("fill", "limegreen").attr("width", function(d,index)
                {
-                return d.Gdata.Value
+                return ProdScale(d.Gdata.Value)
                 }
-               )
+               );
+    
 }
     //filtre function here
     var filtred = function(country)
         {
-           if (typeof country.Cdata !='undefined'&& typeof country.Gdata !='undefined')
+           if (country.Cdata && country.Gdata 
+               && country.Gdata.MEASURE && country.Gdata.MEASURE.includes('IDX2010')
+                )
+            
             {
                 return true
             }
             else {return false}
         console.log("read")
         };
+var Tfilter = function(country)
+    {
+        if (country.TIME == 1990)
+            {return true}
+            else {return false}
+    }
+    var TTfilter = function(country)
+    {
+        if (country.TIME == 2000)
+            {return true}
+            else {return false}
+    }
+    var TTTfilter = function(country)
+    {
+        if (country.TIME == 2010)
+            {return true}
+            else {return false}
+    }
+        var TTTTfilter = function(country)
+    {
+        if (country.TIME == 2018)
+            {return true}
+            else {return false}
+    }
 
 //build the layout
 
 
-//IMMEDIATE QUESTIONS: CoScale and ProdScale not working
-/*for penguins day was just index, here that is not the case. Also, how do we chose to plot graphs for only 1 measure type (USD).
-figure out animation once year change is done, make each graph smalle in size so more fit.
+//IMMEDIATE QUESTIONS:
+/* make buttons and animation
 
 */
 
