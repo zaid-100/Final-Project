@@ -83,14 +83,29 @@ d3.select("svg")
             
             //console.log(goodcountries);
         }
-var drawvis = function(goodcountries, HScale, CoScale)
-{
+    var drawvis = function(goodcountries, HScale, CoScale)
+    {
     var vis = d3.select("#graph")
     .selectAll(".plot")
     .data(goodcountries)
     .enter()
     .append("g").attr("class", "plot")
-    .append("rect").attr("width", function(hours)
+    .append("rect").on("mouseover",function(d)
+            {   
+           var HLabel = "Hours worked/Year:"+d.Value
+            d3.select("#tooltip").text(HLabel)
+            .style("left",(d3.event.pageX + 10) + "px")
+                .style("top", (d3.event.pageY - 30) + "px")
+                .classed("hidden", false);
+            }).on("mouseout", function()
+        {
+            d3.select("#tooltip")
+                .classed("hidden", true);
+        })
+    
+    
+    
+    .attr("class","Hworked").attr("width", function(hours)
     {
         return HScale(hours.Value)
     })
@@ -112,7 +127,20 @@ var drawvis = function(goodcountries, HScale, CoScale)
          return index*100+30
         })
     
-   d3.select("#graph").selectAll(".plot").append("rect").attr("class", "comp").attr("width", 10).attr("height", 80)
+   d3.select("#graph").selectAll(".plot").append("rect")
+       .on("mouseover",function(d)
+            {   
+           var CLabel = "Labor Compensation:"+d.Cdata.Value
+            d3.select("#tooltip").text(CLabel)
+            .style("left",(d3.event.pageX + 10) + "px")
+                .style("top", (d3.event.pageY - 30) + "px")
+                .classed("hidden", false);
+            }).on("mouseout", function()
+        {
+            d3.select("#tooltip")
+                .classed("hidden", true);
+        })
+       .attr("class", "comp").attr("width", 10).attr("height", 80)
     .attr("y", function(d,index)
          {
           return index*100-15
@@ -123,6 +151,18 @@ var drawvis = function(goodcountries, HScale, CoScale)
         //console.log("read", comp)
         })//scale not working here
     d3.select("#graph").selectAll(".plot").append("rect")
+        .on("mouseover",function(d)
+            {   
+           var PLabel = "Productivity(GDP/Hour):"+d.Gdata.Value+"$"
+            d3.select("#tooltip").text(PLabel)
+            .style("left",(d3.event.pageX + 10) + "px")
+                .style("top", (d3.event.pageY - 30) + "px")
+                .classed("hidden", false);
+            }).on("mouseout", function()
+        {
+            d3.select("#tooltip")
+                .classed("hidden", true);
+        })
         .attr("class","prod").attr("height", 20).attr("y",function(d,index)
         {
           return index*100+15
@@ -132,8 +172,8 @@ var drawvis = function(goodcountries, HScale, CoScale)
                 }
                )
 }
-//filtre function here
-var filtred = function(country)
+    //filtre function here
+    var filtred = function(country)
         {
            if (typeof country.Cdata !='undefined'&& typeof country.Gdata !='undefined')
             {

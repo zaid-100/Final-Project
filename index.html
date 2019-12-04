@@ -1,10 +1,28 @@
 <html>
-<head>         <script src="https://d3js.org/d3.v5.min.js"></script>             </head>    
+<head> <style> .hidden
+{
+    display: none;
+}
+
+#tooltip
+{
+    position: absolute;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    
+    font-family: sans-serif;
+    font-size: 12px;
+    color: cornflowerblue;
+}  
+    </style>  
+    <script src="https://d3js.org/d3.v5.min.js"></script>             </head>    
 <body>
 
     <svg></svg>
     
-    
+    <div id=tooltip></div>
     
     
 <script src="Code.js"></script>
