@@ -97,7 +97,7 @@ countries[1].forEach(function(hours)
 console.log("joined data (countries[1])", countries[1])    
 }
         
-var screen = {width: 1330, height:900}
+var screen = {width: 1200, height:900}
 var margins = {top:10, right:50, bottom:50,left:50}
 
 var setup = function(goodcountries)
@@ -112,7 +112,7 @@ d3.select("svg")
     var width = screen.width - margins.left - margins.right;
     var height = screen.height - margins.top - margins.bottom;
     var HScale = d3.scaleLinear()
-    .domain([0,1960])
+    .domain([0,2300])
     .range([0,width]);
     var CoScale = d3.scaleLinear()
     .domain([0,136])
@@ -172,7 +172,7 @@ d3.select("svg")
     {
         return names.LOCATION
     })
-        .attr("x", 1220)
+        .attr("x", 1100)
     .attr("y", function(d, index)
         {
          return index*45+5
