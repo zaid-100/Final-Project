@@ -253,7 +253,7 @@ var Tfilter = function(country)
     }
     var TTTfilter = function(country)
     {
-        if (country.TIME == 2010)
+        if (country.TIME == 2009)
             {return true}
             else {return false}
     }
